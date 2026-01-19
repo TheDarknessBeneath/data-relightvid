@@ -10,3 +10,25 @@ python run_full_workflow.py --input ./assets/LIGHT/talk/talk.mp4 \
   --out-dir ./output/workflow --prompt "change lamp light color to barbie pink" \
   --fps 8 --split-seconds 2.0
 ```
+
+模型路径：
+```
+RelightVid
+├── models
+│   ├── realistic-vision-v51                              // stable diffusion base model
+│   │   ├── text_encoder
+│   │   │   ├── config.json
+│   │   │   └── model.safetensors
+│   │   ├── tokenizer
+│   │   │   ├── merges.txt
+│   │   │   ├── special_tokens_map.json
+│   │   │   ├── tokenizer_config.json
+│   │   │   └── vocab.json
+│   │   ├── unet
+│   │   │   └── diffusion_pytorch_model.safetensors
+│   │   ├── vae
+│   │   │   ├── config.json
+│   │   │   └── diffusion_pytorch_model.safetensors
+│   ├── iclight_sd15_fbc.safetensors                      // ic-light weights
+│   ├── relvid_mm_sd15_fbc.pth                            // relightvid motion weights
+```
