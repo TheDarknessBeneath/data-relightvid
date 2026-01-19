@@ -26,6 +26,18 @@ def main(args):
     fg_tensor = apply_mask_to_video(args.input, args.mask).cuda().unsqueeze(0).to(dtype=torch.float16)
     bg_tensor = load_and_process_video(args.bg_cond).cuda().unsqueeze(0).to(dtype=torch.float16)
 
+    # bg_tensor = bg_tensor.clamp(0, 1)
+    fg_tensor = fg_tensor[:, :, :, 280:(1280 - 280), :] # clip to 1280 x 720
+    bg_tensor = bg_tensor[:, :, :, 280:(1280 - 280), :]
+    print(fg_tensor.size(), bg_tensor.size())
+
+    threshold = -0.9 
+    # 如果 R, G, B 三个通道都小于阈值，则将该像素点替换为 0 (灰色)
+    # 在 Color 维度（dim=2）上进行操作
+    mask = (bg_tensor < threshold).all(dim=2, keepdim=True)
+    bg_tensor.masked_fill_(mask, 0)
+    
+
     cond_fg_tensor = relvid_model.encode_image_to_latent(fg_tensor)
     cond_bg_tensor = relvid_model.encode_image_to_latent(bg_tensor)
     cond_tensor = torch.cat((cond_fg_tensor, cond_bg_tensor), dim=2)

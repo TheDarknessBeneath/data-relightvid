@@ -14,7 +14,7 @@ def unnormalize(x):
     """Convert tensor from [-1, 1] to [0, 1]."""
     return (x + 1) / 2
 
-def load_and_process_video(video_path, num_frames=16, crop_size=512):
+def load_and_process_video(video_path, num_frames=16, crop_size=1280):
     """Load and process the first num_frames of a video."""
     frames = []
     transform = transforms.Compose([
@@ -51,7 +51,7 @@ def save_video_from_frames(image_pred, save_pth, fps=8):
     video_clip.write_videofile(save_pth, codec='libx264')
     print(f"Video saved to {save_pth}")
 
-def apply_mask_to_video(video_path, mask_folder, crop_size=512):
+def apply_mask_to_video(video_path, mask_folder, crop_size=1280):
     cap = cv2.VideoCapture(video_path)
     frames = []
     frame_idx = 0

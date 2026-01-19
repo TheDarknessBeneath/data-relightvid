@@ -14,3 +14,4 @@ static_fg_sync_bg_visualization_fy
 **/__pycache__/
 configs/inference_gradio.yaml
 configs/inference_gradio1.yaml
+**/.DS_Store
